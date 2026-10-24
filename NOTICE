@@ -3,6 +3,7 @@ Upstream: https://github.com/morluto/rea
 Pinned source: 27dc42d10249f0410904a75c0997842eb03b931c
 License: MIT. Copyright (c) 2026 morluto.
 The complete upstream copyright and permission notice is retained in LICENSE.
+Modifications Copyright (c) 2026 REA Lite Skill contributors.
 
 Modifications: condensed on-demand skill entrypoint; target routing, provider
 notes and recipes; lazy MCP gateway instructions and installation examples;

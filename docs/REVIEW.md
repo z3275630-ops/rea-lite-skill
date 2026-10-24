@@ -4,6 +4,11 @@
 found in the release files. This is a documentation release, not a certification
 of every REA provider.
 
+The v1.0.1 packaging correction keeps LICENSE byte-for-byte identical to the
+upstream MIT template, with the modification copyright moved to NOTICE.
+This allows GitHub to recognize the license without changing its terms or any
+skill/tool content. The original v1.0.0 tag is retained.
+
 ## Findings and disposition
 
 Locations in this table refer to the submitted ZIP before this review. `SKILL`

@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.1 - 2026-10-24
+
+- Keep LICENSE byte-for-byte identical to upstream MIT and move the additional
+  modification copyright notice to NOTICE for GitHub license recognition.
+- Skill content, measurements and all tool schemas are unchanged.
+
 ## v1.0.0 - 2026-10-24
 
 - First public release, derived from REA 6.7.0 under MIT.
