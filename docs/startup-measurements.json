@@ -1,0 +1,27 @@
+{
+  "measurementDate": "2026-10-24",
+  "reaVersion": "6.7.0",
+  "proxyVersion": "1.3.3",
+  "tokenizer": "o200k_base",
+  "tiktokenVersion": "0.12.0",
+  "method": "Compact UTF-8 JSON function definitions: name, description, inputSchema as parameters; exclude outputSchema and wire metadata.",
+  "direct": {
+    "toolEntries": 207,
+    "utf8Bytes": 779369,
+    "tokens": 186725
+  },
+  "lazy": {
+    "toolEntries": 9,
+    "utf8Bytes": 5139,
+    "tokens": 1171
+  },
+  "upstreamSkillTokens": 5071,
+  "liteSkillTokens": 1036,
+  "triggerSnippetTokens": 200,
+  "estimatedReaContext": {
+    "directWithSkill": 191796,
+    "lazyWithSkillAndTrigger": 2407,
+    "reductionPercent": 98.75
+  },
+  "limits": "REA-related comparison budget only. Excludes client system prompts, unrelated tools, messages, framing and later references/schemas/results. Not a fresh-chat UI or billing measurement."
+}

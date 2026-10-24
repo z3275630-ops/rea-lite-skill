@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.0.2 - 2026-10-24
+
+- Rewrite the README around the author's ~200k-token startup experience, with
+  Chinese as the primary version and an English translation.
+- Add a fresh model-facing comparison: 191,796 to 2,407 REA-related tokens
+  including the loaded skill and trigger snippet, about 98.7% lower under the
+  documented normalization. This is not a client's total prompt measurement.
+- Add measurement JSON, an optional token-counting helper and reproduction
+  instructions. Distinguish 207/207 tool-interface preservation from unproven
+  task-quality equivalence and condensed specialized guidance.
+- The skill entrypoint, backend, tool interfaces and license are unchanged.
+
 ## v1.0.1 - 2026-10-24
 
 - Keep LICENSE byte-for-byte identical to upstream MIT and move the additional

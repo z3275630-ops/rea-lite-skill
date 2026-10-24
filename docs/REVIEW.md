@@ -9,6 +9,13 @@ upstream MIT template, with the modification copyright moved to NOTICE.
 This allows GitHub to recognize the license without changing its terms or any
 skill/tool content. The original v1.0.0 tag is retained.
 
+The v1.0.2 README adds a separate normalized model-facing startup comparison:
+191,796 to 2,407 REA-related tokens after loading the skill and supplied trigger
+snippet. See [STARTUP.md](STARTUP.md) for the fresh capture method and limits.
+The complete wire-catalog measurements below remain a separate representation.
+The optional token-counting script does not execute the REA backend or make
+model API requests. The skill entrypoint and earlier interface checks are unchanged.
+
 ## Findings and disposition
 
 Locations in this table refer to the submitted ZIP before this review. `SKILL`

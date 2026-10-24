@@ -1,87 +1,99 @@
 # REA Lite Skill
 
-**About 80% smaller skill entrypoint. All 207 REA tool schemas remain accessible.**
+中文 · [English](README.en.md)
 
-An unofficial, on-demand skill for [REA](https://github.com/morluto/rea),
-derived from **morluto/rea 6.7.0**. It helps agents reverse engineer APKs,
-native binaries, .NET, Electron/JavaScript bundles, firmware and captures
-without loading every provider guide and tool schema at the start.
+**开局约 20 万 token？我也受不了，于是把 REA 改成了按需加载。**
 
-## What gets lighter
+保留 **207/207 个原版工具接口**，把 **REA 相关的开局开销估算压到约 2.4k token**。
+基于官方 [REA 6.7.0](https://github.com/morluto/rea)，实际分析继续使用原版后端。
 
-| Measured item | Upstream / direct | REA Lite / lazy |
+## 为什么做这个
+
+我很喜欢 REA 能做的事情，但在自己的配置里，直连 MCP 后新对话开局就占了约
+20 万 token。还没开始分析目标，工具说明已经吃掉一大块上下文，这实在受不了。
+
+所以我想：207 个工具都留着，能不能用到哪个，再让 AI 读哪个的参数？
+操作手册也一样，分析 APK 时先看 Android 部分，其他平台的说明先别塞进来。
+
+这个项目就是这次尝试。我复用了 MCP Compression Proxy 的懒加载模式，
+把技能入口进一步拆薄，再实际比较工具定义和调用结果。
+
+## 试下来，省了多少
+
+对照的是**官方 REA 6.7.0**，不是另一个 ZCode 改写版。重新启动隔离的 MCP
+进程取得工具目录，再使用同一套 `o200k_base` tokenizer 计数：
+
+| REA 相关内容 | 官方原版，直接暴露工具 | REA Lite，按需发现工具 |
 |---|---:|---:|
-| Skill entrypoint, UTF-8 bytes | 23,523 | **4,630 (-80.3%)** |
-| Skill entrypoint, `o200k_base` tokens | 5,071 | **1,036 (-79.6%)** |
-| Client-facing tool entries | 207 REA tools | **9 gateway tools** |
-| Serialized MCP catalog, UTF-8 bytes | 3,158,368 | **4,879 (-99.85%)** |
+| 给模型的工具定义 | 186,725 token | **1,171 token** |
+| 加载后的技能入口 | 5,071 token | **1,036 token** |
+| 本项目的 AGENTS 触发片段 | 无 | 200 token |
+| **上述内容合计** | **191,796，约 19.2 万** | **2,407，约 2.4k** |
 
-These are two separate improvements: a shorter skill entrypoint and lazy MCP
-discovery. **Copying this skill alone does not configure the gateway or remove
-an existing direct REA registration.** Reference files and selected tool schemas
-load later when needed; the savings are not a promise about total task tokens.
-Catalog size includes complete `tools/list` JSON; clients may transform or omit
-parts before prompting. See the [measurement method](docs/REVIEW.md).
+**按这个口径，REA 相关开销减少约 98.7%。** 任务还没触发、技能正文尚未读取时，
+工具定义本身约占 **1.2k token**；后续用到哪个工具或领域，再加载相应资料。
 
-## What stays available
+“开局约 20 万”是我当时使用配置中的体验；表格是这次可复核的对照估算。
+这里不包含客户端系统提示、其他 MCP、聊天记录及额外封装，也不是客户端
+界面上的总 token 读数。不同客户端会采用不同工具格式；如果本来就有懒加载，
+收益也会不同。后续按需读取的参数、指南和分析结果仍然会消耗上下文。
 
-- Target routing, schema-first calls, evidence IDs, bounded paging and cleanup.
-- Provider constraints and practical recipes, loaded only for the task at hand.
-- All **207 exact REA 6.7.0 tool names** and their original input schemas.
-- Six upstream domain guides, retained byte-for-byte with MIT attribution.
+[计数方法与复现](docs/STARTUP.md) · [测量 JSON](docs/startup-measurements.json)
 
-REA Lite changes documentation and connection guidance. It does not fork the
-analysis backend or bundle engines. Each operation still needs its supported
-host, provider, configuration and authorization. All 207 schemas were verified
-through the gateway; one offline PE inspection returned identical Evidence
-through direct and lazy connections. This does not certify all 207 operations
-against real engines.
+## 保留了多少能力
 
-## Install in ZCode
+**工具接口保留率是 100%：207 个仍然都能发现和调用。任务效果不承诺 100% 无损。**
 
-1. Have a compatible Node.js, `rea-agents@6.7.0`, and
-   `mcp-compression-proxy@1.3.3` installed.
-2. Back up an existing skill, then copy `skills/reverse-engineer-anything/`
-   into `~/.zcode/skills/`. Keep the folder name `reverse-engineer-anything`.
-3. Merge [snippets/AGENTS.md](snippets/AGENTS.md) into your existing
-   `~/.zcode/AGENTS.md`; preserve unrelated instructions.
-4. Configure the proxy with **`toolExposure: "lazy"`** and a `rea` backend.
-   Register only the gateway in this client; disable its direct REA entry.
-5. Start a new conversation. Ask a concrete artifact question and verify
-   search → schema lookup → call through the gateway.
+- 没有删改 REA 的分析引擎，也没有另写一套反编译器；请求交给官方后端执行。
+- 207 份工具输入参数定义，逐一通过网关获取并与直连原版比较，全部一致。
+- 六份官方领域指南逐字节保留；路由、引擎约束和操作流程按需读取。
+- 一次离线 PE 检查通过两条路径返回的完整 Evidence 完全相同。
 
-The [complete setup guide](docs/SETUP.md) includes portable JSON examples and
-Windows paths. No private configuration files are distributed here.
+我没有把 207 个工具的全部真实引擎工作流都跑一遍，也没有证明每种任务的
+完成质量与原版完全相同。部分原版冷门场景说明被压缩，未全部逐条搬入；
+多了一层网关和发现步骤，AI 也需要主动查指南、翻页，避免漏看证据。
+依赖、平台和用户授权仍按原版要求执行。
 
-## Compatibility and layout
+[完整评审与验证范围](docs/REVIEW.md) · [与原版的改动](docs/CHANGES.md)
 
-Pinned to **REA 6.7.0** and tested with **MCP Compression Proxy 1.3.3**, Windows
-x64 and Node.js. ZCode discovery is the primary installation target. Other
-clients can load the same skill if they support skills and lazy MCP; use their
-actual tool prefixes and configuration format. Re-check behavior after upgrades.
-The agent must have an ordinary file-reading tool to load reference files.
+## 如何工作
 
-```text
-skills/reverse-engineer-anything/
-  SKILL.md                 # small entrypoint
-  references/              # load only the relevant guide
-snippets/AGENTS.md          # Chinese trigger rules
-docs/SETUP.md               # installation and configuration
-docs/REVIEW.md              # findings, evidence and verification limits
-docs/tool-names-6.7.0.txt    # exact backend inventory
-LICENSE / NOTICE           # upstream attribution
+```mermaid
+flowchart LR
+    A[AI 读取简短技能入口] --> B[按需搜索工具、读取参数]
+    B --> C[官方 REA 后端]
+    C --> D[原有分析引擎]
+    D --> E[证据与结果按需读取]
 ```
 
-## 中文说明
-
-这是 REA 的非官方轻量技能：入口正文约减少 **80%**，通过懒加载网关按需读取
-工具参数，保留 207 个工具的访问路径。只安装技能不会自动完成网关配置。
-引擎、平台和授权限制仍然适用；“保留工具访问能力”不代表实测了全部工具。
-
-## Attribution and license
-
-Derived from [morluto/rea](https://github.com/morluto/rea), **6.7.0**, MIT,
-Copyright (c) 2026 morluto. **Not affiliated with or endorsed by the REA project.**
+原版 REA 已有按需阅读领域指南的设计；本项目进一步缩短主入口，并通过
 [MCP Compression Proxy](https://github.com/kdpa-llc/mcp-compression-proxy)
-is a separate dependency. See [LICENSE](LICENSE), [NOTICE](NOTICE) and
-[CHANGELOG.md](CHANGELOG.md).
+让工具定义也按需发现。AI 初始看到的是 **9 个网关入口**，用到工具时再搜索、
+读取原始参数、调用 REA。207 个工具仍在后端，并没有变成只剩 9 项功能。
+
+## 安装
+
+1. 使用兼容的 Node.js，以及 `rea-agents@6.7.0` 和 `mcp-compression-proxy@1.3.3`。
+2. 备份已有技能，将整个 `skills/reverse-engineer-anything/` 复制到
+   `~/.zcode/skills/`，保留目录名和 `references/`。
+3. 将 [snippets/AGENTS.md](snippets/AGENTS.md) 合并到自己的
+   `~/.zcode/AGENTS.md`，保留其他规则。
+4. 配置网关：设置 **`toolExposure: "lazy"`**，添加 `rea` 后端；
+   在该客户端禁用直连 REA 注册，只连接网关。
+5. 重启或重新连接客户端，开新对话，提供目标文件路径和具体问题。
+
+**只复制技能文件，不会自动完成懒加载配置。**
+[完整安装指南](docs/SETUP.md) 提供 Windows 和 ZCode 的示例设置。
+其他支持技能与 MCP 的客户端也可适配，但需使用各自的配置格式和工具前缀。
+
+## 版本与许可
+
+当前验证针对 **REA 6.7.0 + MCP Compression Proxy 1.3.3**，升级后应重新检查。
+旧的完整 MCP 目录计数包含 output schema 等元数据，与上表的模型工具定义
+口径不同，详见 [REVIEW.md](docs/REVIEW.md)。
+
+本项目是 **morluto/rea 6.7.0 的非官方衍生技能**，与上游没有隶属或背书关系。
+MIT，保留 Copyright (c) 2026 morluto。引擎和代理是独立依赖，仓库不包含
+私有配置、凭据、日志、payload、node_modules 或 npm 安装包。
+
+[LICENSE](LICENSE) · [NOTICE](NOTICE) · [CHANGELOG](CHANGELOG.md)
