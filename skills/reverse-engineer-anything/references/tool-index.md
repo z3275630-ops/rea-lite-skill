@@ -1,0 +1,27 @@
+# REA tool index (6.7.0)
+
+Full catalog of the 207 tools exposed by `rea-agents` 6.7.0, grouped by area. Read this only when the routing table in `SKILL.md` does not cover the target, or use `search_tools` for a focused lookup. Most work uses 15–25 tools.
+
+**Session and evidence:** `binary_session`, `close_binary`, `inspect_analysis_view`, `get_evidence_bundle`, `export_evidence_bundle`, `import_evidence_bundle`, `inspect_artifact`, `extract_artifact`, `compare_artifacts`, `build_reconstruction_obligation_ledger`, `evaluate_reconstruction_coverage`, `verify_reconstruction`, `list_unknowns`, `record_unknown`, `update_unknown`, `verify_unknown_resolution`, `find_changed_behavior`.
+
+**Native inventory:** `open_binary`, `binary_overview`, `list_architectures`, `list_documents`, `list_segments`, `list_procedures`, `search_procedures`, `list_strings`, `search_strings`, `search_bytes`, `read_bytes`, `read_function_instructions`, `list_names`, `list_bookmarks`, `address_to_file_offset`.
+
+**Native function work:** `procedure_info`, `procedure_address`, `procedure_assembly`, `procedure_pseudo_code`, `procedure_callees`, `procedure_callers`, `procedure_references`, `resolve_containing_procedure`, `resolve_native_call_targets`, `analyze_function`, `batch_decompile`, `get_call_graph`, `build_call_path`, `trace_call_path`, `xrefs`, `find_xrefs_to_name`, `analyze_swift_types`, `demangle_swift`, `get_objc_classes`, `get_objc_protocols`.
+
+**Native annotations:** `address_name`, `set_address_name`, `set_addresses_names`, `comment`, `set_comment`, `inline_comment`, `set_inline_comment`, `annotate_native_function`, `set_bookmark`, `unset_bookmark`, `goto_address`, `next_address`, `prev_address`, `current_address`, `current_procedure`, `current_document`.
+
+**Native inspection:** `inspect_native_instruction`, `inspect_native_data_type`, `inspect_native_dispatch_metadata`, `inspect_native_load_image`, `inspect_native_api`, `inspect_address_context`, `inspect_with_objdump`, `trace_native_values`, `trace_native_ui_action`, `observe_native_calls`, `observe_native_ui`, `capture_native_ui_scenario`.
+
+**Android:** `inspect_android_package`, `decode_android_resources`, `inspect_android_class`, `inspect_android_method`, `search_android_classes`, `trace_android_references`, `project_android_application_graph`, `pull_adb_package`, `install_adb_package`, `start_adb_app`, `start_adb_activity`, `stop_adb_app`, `read_adb_logcat`, `capture_adb_screen`, `collect_adb_bugreport`, `list_adb_devices`, `list_adb_packages`, `list_adb_processes`, `inspect_adb_package`.
+
+**JavaScript / Web / Electron:** `analyze_javascript_application`, `analyze_web_bundle`, `trace_application_feature`, `trace_feature`, `trace_javascript_semantics`, `trace_web_module_imports`, `trace_web_source_location`, `compare_application_versions`, `compare_bundles`, `compare_javascript_export_shapes`, `compare_web_captures`, `compare_web_screenshots`, `compare_source_to_bundle`, `correlate_static_and_runtime`, `reconcile_javascript_runtime`, `recover_javascript_sources`, `export_web_scripts`, `inspect_web_page`, `inspect_web_event_listeners`, `inspect_web_network_capture`, `observe_javascript_runtime`, `observe_web_execution`, `observe_web_session`, `list_browser_targets`, `list_javascript_runtime_targets`, `capture_browser_scenario`, `capture_web_screenshot`, `discover_webmcp_tools`, `list_electron_targets`, `inspect_electron_fuses`, `inspect_electron_page`, `capture_electron_scenario`.
+
+**Managed .NET:** `inspect_managed_artifact`, `inspect_managed_members`, `compare_managed_members`, `project_managed_application_graph`, `import_managed_reconstruction`, `inspect_managed_native_boundaries`, `verify_managed_native_boundaries`.
+
+**Offline formats:** `inspect_firmware_regions`, `extract_firmware`, `inspect_packet_fields`, `inspect_packet_capture`, `inspect_pcap_capture`, `inspect_pcap_client`, `inspect_signal_decoders`, `decode_signal_recording`, `inspect_wasm_artifact`, `compare_wasm_interfaces`, `inspect_evm_interface`, `inspect_go_binary`, `inspect_rust_binary`, `inspect_sqlite_database`, `inspect_binary_layout`, `inspect_recorded_crash`, `inspect_pe_resources`, `inspect_dart_aot`, `identify_flutter_build`, `project_harmony_application_graph`, `inspect_macho`, `inspect_plist`, `inspect_signature`, `trace_dylib_resolution`, `inspect_asset_catalog`, `decode_interface_builder`, `inspect_keyed_archive`.
+
+**Runtime and debug:** `start_frida_session`, `load_frida_script`, `resume_frida_session`, `frida_session_status`, `close_frida_session`, `list_frida_devices`, `list_frida_processes`, `instrument_with_frida`, `unload_frida_script`, `start_gdb_session`, `gdb_console`, `gdb_session_status`, `close_gdb_session`, `start_rizin_debug_session`, `rizin_debug_command`, `execute_rizin_command`, `rizin_debug_session_status`, `close_rizin_debug_session`, `list_cutter_sessions`, `cutter_command`, `capture_process_scenario`, `compare_process_captures`.
+
+**JEB:** `open_jeb_project`, `list_jeb_units`, `decompile_jeb_item`, `inspect_jeb_client`.
+
+**Additional client, device and comparison tools:** `compare_functions`, `get_navigation_context`, `inspect_adb_client`, `inspect_adb_device`, `inspect_adb_display`, `inspect_adb_window`, `inspect_apktool_client`, `list_adb_directory`, `list_adb_features`, `list_adb_services`, `project_apple_application_graph`, `pull_adb_file`, `push_adb_file`, `read_adb_setting`, `resolve_adb_packages`, `uninstall_adb_package`.

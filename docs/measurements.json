@@ -1,0 +1,37 @@
+{
+  "upstreamRef": "27dc42d10249f0410904a75c0997842eb03b931c",
+  "tokenizer": "tiktoken/o200k_base",
+  "upstreamAuthored": {
+    "bytes": 23510,
+    "tokens": 5044
+  },
+  "upstreamGenerated": {
+    "bytes": 23523,
+    "tokens": 5071,
+    "sha256": "fbcd39d6abe803cf7aa49c1880815bc8e22ba2af87a23681944f687bb7629eb1"
+  },
+  "submitted": {
+    "bytes": 16204,
+    "tokens": 3906
+  },
+  "release": {
+    "bytes": 4630,
+    "tokens": 1036,
+    "sha256": "bef6c140637da226862ccfeb1474ea453a585a1aa6ba5a6bcc95a558d934f72f"
+  },
+  "mcp_default": {
+    "tools": 207,
+    "bytes": 3158368,
+    "tokens": 833082
+  },
+  "mcp_compact": {
+    "tools": 207,
+    "bytes": 2576431,
+    "tokens": 689701
+  },
+  "mcp_lazy": {
+    "tools": 9,
+    "bytes": 4879,
+    "tokens": 1128
+  }
+}

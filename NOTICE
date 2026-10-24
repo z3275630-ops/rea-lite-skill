@@ -1,0 +1,18 @@
+REA Lite Skill is an unofficial derivative of morluto/rea, rea-agents 6.7.0.
+Upstream: https://github.com/morluto/rea
+Pinned source: 27dc42d10249f0410904a75c0997842eb03b931c
+License: MIT. Copyright (c) 2026 morluto.
+The complete upstream copyright and permission notice is retained in LICENSE.
+
+Modifications: condensed on-demand skill entrypoint; target routing, provider
+notes and recipes; lazy MCP gateway instructions and installation examples;
+Chinese AGENTS.md trigger snippet; complete verified tool index and review.
+
+The following six files under skills/reverse-engineer-anything/references/
+are retained byte-for-byte from the pinned upstream source:
+android-applications.md, connection-and-recovery.md, evidence-workflows.md,
+javascript-applications.md, native-and-artifacts.md, runtime-observation.md.
+Other references are adaptations or additions, covered by this repository's
+MIT license. MCP Compression Proxy is a separate dependency, not bundled here.
+
+This project is not affiliated with or endorsed by morluto/rea.
